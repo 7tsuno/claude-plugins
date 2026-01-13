@@ -1,15 +1,11 @@
 ---
 name: progressive-workflow
-description: Execute pre-defined workflows step by step. Use when user wants to run a workflow from the workflows/ directory or mentions "workflow". Each step is executed in isolation to maintain focus throughout multi-step tasks.
+description: Execute pre-defined workflows step by step. Use when user wants to run a workflow or mentions "workflow". Each step is executed in isolation to maintain focus throughout multi-step tasks.
 ---
 
 # Progressive Workflow
 
 Execute pre-defined workflows one step at a time.
-
-## Setup
-
-Create a `workflows/` directory in your project root with workflow definitions.
 
 ## Execution Flow
 
@@ -58,5 +54,4 @@ Execute the returned prompt, then call with `step_index + 1` until `is_last` is 
 
 ## Important
 
-- Workflows must be placed in `workflows/` directory at project root
 - Never read workflow.yaml directly. Always use `get_next_prompt.js` to get one prompt at a time.
