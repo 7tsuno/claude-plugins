@@ -1,0 +1,20 @@
+name: Refactor
+description: Structured refactoring workflow with safety checks
+
+args:
+  - name: TARGET_FILE
+    description: File or directory to refactor
+    required: true
+  - name: REFACTOR_GOAL
+    description: Goal of refactoring (e.g., extract function, rename, simplify)
+    required: true
+
+steps:
+  - name: analyze
+    prompt: prompts/01-analyze.md
+  - name: plan
+    prompt: prompts/02-plan.md
+  - name: implement
+    prompt: prompts/03-implement.md
+  - name: verify
+    prompt: prompts/04-verify.md

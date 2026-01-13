@@ -1,17 +1,15 @@
-#!/usr/bin/env npx tsx
+#!/usr/bin/env node
 /**
  * Get args definition for a specific workflow.
  */
 
 import * as fs from "fs";
 import * as path from "path";
-import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const DEFAULT_WORKFLOWS_DIR = path.resolve(__dirname, "../../../progressive-prompts");
+// Default to project root's progressive-prompts directory
+const DEFAULT_WORKFLOWS_DIR = path.resolve(process.cwd(), "workflows");
 
-interface WorkflowArg {
+export interface WorkflowArg {
   name: string;
   description: string;
   required: boolean;
@@ -20,7 +18,7 @@ interface WorkflowArg {
 /**
  * Simple YAML parser for args section.
  */
-function parseArgsFromYaml(content: string): WorkflowArg[] {
+export function parseArgsFromYaml(content: string): WorkflowArg[] {
   const args: WorkflowArg[] = [];
   const lines = content.split("\n");
 
@@ -81,7 +79,7 @@ function parseArgsFromYaml(content: string): WorkflowArg[] {
   return args;
 }
 
-function getWorkflowArgs(workflowId: string, baseDir: string = ".claude/progressive-prompts"): WorkflowArg[] {
+export function getWorkflowArgs(workflowId: string, baseDir: string = "progressive-prompts"): WorkflowArg[] {
   const workflowFile = path.join(baseDir, workflowId, "workflow.yaml");
 
   if (!fs.existsSync(workflowFile)) {
@@ -92,19 +90,28 @@ function getWorkflowArgs(workflowId: string, baseDir: string = ".claude/progress
   return parseArgsFromYaml(content);
 }
 
-// Main
-const workflowId = process.argv[2];
-const baseDir = process.argv[3] || DEFAULT_WORKFLOWS_DIR;
+// CLI entry point
+function main() {
+  const workflowId = process.argv[2];
+  const baseDir = process.argv[3] || DEFAULT_WORKFLOWS_DIR;
 
-if (!workflowId) {
-  console.error("Usage: get_workflow_args.ts <workflow_id> [base_dir]");
-  process.exit(1);
+  if (!workflowId) {
+    console.error("Usage: get_workflow_args.js <workflow_id> [base_dir]");
+    process.exit(1);
+  }
+
+  try {
+    const args = getWorkflowArgs(workflowId, baseDir);
+    console.log(JSON.stringify(args, null, 2));
+  } catch (e) {
+    console.error(JSON.stringify({ error: (e as Error).message }));
+    process.exit(1);
+  }
 }
 
-try {
-  const args = getWorkflowArgs(workflowId, baseDir);
-  console.log(JSON.stringify(args, null, 2));
-} catch (e) {
-  console.error(JSON.stringify({ error: (e as Error).message }));
-  process.exit(1);
+// Run main only when executed directly (not imported)
+const isDirectRun = process.argv[1]?.endsWith("get_workflow_args.js") ||
+                    process.argv[1]?.endsWith("get_workflow_args.ts");
+if (isDirectRun) {
+  main();
 }

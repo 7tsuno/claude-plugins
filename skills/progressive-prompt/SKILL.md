@@ -7,18 +7,22 @@ description: Execute multiple prompts sequentially with physical isolation. Use 
 
 Execute pre-defined workflows one prompt at a time.
 
+## Setup
+
+Create a `workflows/` directory in your project root with workflow definitions.
+
 ## Execution Flow
 
 1. Get workflow catalog
 2. Select workflow based on user's request
 3. Get args definition for selected workflow
 4. Ask user for missing required args
-5. Execute each step using `get_next_prompt.ts`
+5. Execute each step using `get_next_prompt.js`
 
 ## Step 1: Get Catalog
 
 ```bash
-npx tsx <BASE_DIR>/scripts/get_workflow_catalog.ts
+node <SKILL_DIR>/scripts/get_workflow_catalog.js
 ```
 
 Returns:
@@ -29,7 +33,7 @@ Returns:
 ## Step 2: Get Args (after selecting workflow)
 
 ```bash
-npx tsx <BASE_DIR>/scripts/get_workflow_args.ts <workflow_id>
+node <SKILL_DIR>/scripts/get_workflow_args.js <workflow_id>
 ```
 
 Returns:
@@ -42,7 +46,7 @@ If required args are missing from user's request, ask the user.
 ## Step 3: Execute Steps
 
 ```bash
-npx tsx <BASE_DIR>/scripts/get_next_prompt.ts <workflow_id> <step_index> '<variables_json>'
+node <SKILL_DIR>/scripts/get_next_prompt.js <workflow_id> <step_index> '<variables_json>'
 ```
 
 Returns:
@@ -54,4 +58,5 @@ Execute the returned prompt, then call with `step_index + 1` until `is_last` is 
 
 ## Important
 
-Never read workflow.yaml directly. Always use `get_next_prompt.ts` to get one prompt at a time.
+- Workflows must be placed in `workflows/` directory at project root
+- Never read workflow.yaml directly. Always use `get_next_prompt.js` to get one prompt at a time.

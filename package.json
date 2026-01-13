@@ -1,0 +1,22 @@
+{
+  "name": "progressive-prompt",
+  "version": "1.0.0",
+  "description": "Execute multiple prompts sequentially with physical isolation for Claude Code",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf skills/progressive-prompt/scripts/*.js",
+    "prebuild": "npm run clean",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0"
+  },
+  "files": [
+    ".claude-plugin",
+    "skills"
+  ]
+}

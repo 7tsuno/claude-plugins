@@ -1,0 +1,14 @@
+name: Sample Workflow
+description: A sample workflow for testing
+args:
+  - name: TARGET_FILE
+    description: Target file path
+    required: true
+  - name: OPTIONAL_FLAG
+    description: Optional flag
+    required: false
+steps:
+  - name: step1
+    prompt: prompts/step1.md
+  - name: step2
+    prompt: prompts/step2.md

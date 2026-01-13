@@ -1,4 +1,4 @@
-#!/usr/bin/env npx tsx
+#!/usr/bin/env node
 /**
  * Get the next prompt from a workflow.
  * Returns only the current step's prompt content (physical isolation).
@@ -6,18 +6,16 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const DEFAULT_WORKFLOWS_DIR = path.resolve(__dirname, "../../../progressive-prompts");
+// Default to project root's progressive-prompts directory
+const DEFAULT_WORKFLOWS_DIR = path.resolve(process.cwd(), "workflows");
 
-interface WorkflowStep {
+export interface WorkflowStep {
   name: string;
   prompt: string;
 }
 
-interface PromptResult {
+export interface PromptResult {
   step_index: number;
   step_name: string;
   prompt: string;
@@ -28,7 +26,7 @@ interface PromptResult {
 /**
  * Simple YAML parser for workflow.yaml files.
  */
-function parseSimpleYaml(content: string): Record<string, unknown> {
+export function parseWorkflowYaml(content: string): Record<string, unknown> {
   const result: Record<string, unknown> = {};
   const lines = content.split("\n");
 
@@ -98,13 +96,13 @@ function parseSimpleYaml(content: string): Record<string, unknown> {
 /**
  * Replace {{VAR_NAME}} placeholders with actual values.
  */
-function substituteVariables(content: string, variables: Record<string, string>): string {
+export function substituteVariables(content: string, variables: Record<string, string>): string {
   return content.replace(/\{\{(\w+)\}\}/g, (match, varName) => {
     return variables[varName] ?? match;
   });
 }
 
-function loadWorkflow(workflowId: string, baseDir: string): Record<string, unknown> {
+export function loadWorkflow(workflowId: string, baseDir: string): Record<string, unknown> {
   const workflowFile = path.join(baseDir, workflowId, "workflow.yaml");
 
   if (!fs.existsSync(workflowFile)) {
@@ -112,14 +110,14 @@ function loadWorkflow(workflowId: string, baseDir: string): Record<string, unkno
   }
 
   const content = fs.readFileSync(workflowFile, "utf-8");
-  return parseSimpleYaml(content);
+  return parseWorkflowYaml(content);
 }
 
-function getPrompt(
+export function getPrompt(
   workflowId: string,
   stepIndex: number,
   variables: Record<string, string> = {},
-  baseDir: string = ".claude/progressive-prompts"
+  baseDir: string = "progressive-prompts"
 ): PromptResult {
   const workflow = loadWorkflow(workflowId, baseDir);
   const steps = (workflow.steps as WorkflowStep[]) || [];
@@ -153,13 +151,13 @@ function getPrompt(
   };
 }
 
-// Main
+// CLI entry point
 function main() {
   const args = process.argv.slice(2);
 
   if (args.length < 2) {
-    console.error("Usage: get_next_prompt.ts <workflow_id> <step_index> [variables_json] [base_dir]");
-    console.error('Example: get_next_prompt.ts review 0 \'{"PR_NUMBER": "123"}\'');
+    console.error("Usage: get_next_prompt.js <workflow_id> <step_index> [variables_json] [base_dir]");
+    console.error('Example: get_next_prompt.js review 0 \'{"PR_NUMBER": "123"}\'');
     process.exit(1);
   }
 
@@ -177,4 +175,9 @@ function main() {
   }
 }
 
-main();
+// Run main only when executed directly (not imported)
+const isDirectRun = process.argv[1]?.endsWith("get_next_prompt.js") ||
+                    process.argv[1]?.endsWith("get_next_prompt.ts");
+if (isDirectRun) {
+  main();
+}

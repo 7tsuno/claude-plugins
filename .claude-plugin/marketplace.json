@@ -1,0 +1,11 @@
+{
+  "name": "progressive-prompt-marketplace",
+  "description": "Marketplace for Progressive Prompt plugin",
+  "plugins": [
+    {
+      "name": "progressive-prompt",
+      "description": "Execute multiple prompts sequentially with physical isolation. Prevents attention loss by showing only one prompt at a time.",
+      "path": "."
+    }
+  ]
+}

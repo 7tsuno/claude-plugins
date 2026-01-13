@@ -1,0 +1,9 @@
+{
+  "name": "progressive-prompt",
+  "version": "1.0.0",
+  "description": "Execute multiple prompts sequentially with physical isolation. Prevents attention loss by showing only one prompt at a time.",
+  "author": "7tsuno",
+  "repository": "https://github.com/7tsuno/progressive-prompt",
+  "license": "MIT",
+  "keywords": ["workflow", "progressive", "prompt", "multi-step"]
+}

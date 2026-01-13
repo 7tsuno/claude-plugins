@@ -1,27 +1,25 @@
-#!/usr/bin/env npx tsx
+#!/usr/bin/env node
 /**
- * Get workflow catalog from .claude/progressive-prompts/ directory.
+ * Get workflow catalog from progressive-prompts/ directory.
  * Returns only id, name, description (not args).
  */
 
 import * as fs from "fs";
 import * as path from "path";
-import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const DEFAULT_WORKFLOWS_DIR = path.resolve(__dirname, "../../../progressive-prompts");
+// Default to project root's workflows directory
+const DEFAULT_WORKFLOWS_DIR = path.resolve(process.cwd(), "workflows");
 
-interface WorkflowCatalogEntry {
+export interface WorkflowCatalogEntry {
   id: string;
   name: string;
   description: string;
 }
 
 /**
- * Simple YAML parser for workflow.yaml files.
+ * Simple YAML parser for workflow.yaml files (top-level only).
  */
-function parseSimpleYaml(content: string): Record<string, string> {
+export function parseSimpleYaml(content: string): Record<string, string> {
   const result: Record<string, string> = {};
   const lines = content.split("\n");
 
@@ -39,7 +37,7 @@ function parseSimpleYaml(content: string): Record<string, string> {
   return result;
 }
 
-function getWorkflowCatalog(baseDir: string = ".claude/progressive-prompts"): WorkflowCatalogEntry[] {
+export function getWorkflowCatalog(baseDir: string = "progressive-prompts"): WorkflowCatalogEntry[] {
   const catalog: WorkflowCatalogEntry[] = [];
 
   if (!fs.existsSync(baseDir)) {
@@ -71,7 +69,16 @@ function getWorkflowCatalog(baseDir: string = ".claude/progressive-prompts"): Wo
   return catalog;
 }
 
-// Main
-const baseDir = process.argv[2] || DEFAULT_WORKFLOWS_DIR;
-const catalog = getWorkflowCatalog(baseDir);
-console.log(JSON.stringify(catalog, null, 2));
+// CLI entry point
+function main() {
+  const baseDir = process.argv[2] || DEFAULT_WORKFLOWS_DIR;
+  const catalog = getWorkflowCatalog(baseDir);
+  console.log(JSON.stringify(catalog, null, 2));
+}
+
+// Run main only when executed directly (not imported)
+const isDirectRun = process.argv[1]?.endsWith("get_workflow_catalog.js") ||
+                    process.argv[1]?.endsWith("get_workflow_catalog.ts");
+if (isDirectRun) {
+  main();
+}
