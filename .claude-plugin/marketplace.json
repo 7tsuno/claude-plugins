@@ -1,5 +1,5 @@
 {
-  "name": "progressive-prompt-marketplace",
+  "name": "7tsuno-claude-plugins",
   "owner": {
     "name": "7tsuno"
   },
@@ -7,7 +7,7 @@
     {
       "name": "progressive-prompt",
       "description": "Execute multiple prompts sequentially with physical isolation. Prevents attention loss by showing only one prompt at a time.",
-      "source": "./"
+      "source": "./plugins/progressive-prompt"
     }
   ]
 }

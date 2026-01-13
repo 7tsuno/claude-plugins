@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf skills/progressive-prompt/scripts/*.js",
+    "clean": "rm -rf ../../plugins/progressive-prompt/skills/progressive-prompt/scripts/*.js",
     "prebuild": "npm run clean",
     "test": "vitest run",
     "test:watch": "vitest"
@@ -14,9 +14,5 @@
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0",
     "vitest": "^2.0.0"
-  },
-  "files": [
-    ".claude-plugin",
-    "skills"
-  ]
+  }
 }

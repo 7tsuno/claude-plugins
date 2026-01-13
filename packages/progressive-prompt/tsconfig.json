@@ -3,7 +3,7 @@
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "outDir": "skills/progressive-prompt/scripts",
+    "outDir": "../../plugins/progressive-prompt/skills/progressive-prompt/scripts",
     "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,
