@@ -1,11 +1,13 @@
 {
   "name": "progressive-prompt-marketplace",
-  "description": "Marketplace for Progressive Prompt plugin",
+  "owner": {
+    "name": "7tsuno"
+  },
   "plugins": [
     {
       "name": "progressive-prompt",
       "description": "Execute multiple prompts sequentially with physical isolation. Prevents attention loss by showing only one prompt at a time.",
-      "path": "."
+      "source": "."
     }
   ]
 }
