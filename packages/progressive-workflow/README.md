@@ -121,6 +121,22 @@ Or use the skill directly:
 | `name` | string | Yes | Step identifier |
 | `prompt` | string | Yes | Path to prompt file (relative to workflow directory) |
 
+## Configuration
+
+By default, workflows are stored in the `workflows/` directory at your project root. You can customize this by creating a `.progressive-workflow.json` file:
+
+```json
+{
+  "workflowsDir": ".claude/workflows"
+}
+```
+
+This allows you to organize workflows in nested directories like `.claude/workflows` or `config/workflows`.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `workflowsDir` | string | `"workflows"` | Path to workflows directory (relative to project root) |
+
 ## Examples
 
 See the [examples/](./examples/) directory for complete workflow examples:
@@ -151,6 +167,7 @@ npm run test:watch  # Watch mode
 ```
 packages/progressive-workflow/
 ├── src/                    # TypeScript source
+│   ├── config.ts
 │   ├── get_next_prompt.ts
 │   ├── get_workflow_args.ts
 │   └── get_workflow_catalog.ts

@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 /**
- * Get workflow catalog from progressive-prompts/ directory.
+ * Get workflow catalog from workflows directory.
  * Returns only id, name, description (not args).
  */
 
 import * as fs from "fs";
 import * as path from "path";
-
-// Default to project root's workflows directory
-const DEFAULT_WORKFLOWS_DIR = path.resolve(process.cwd(), "workflows");
+import { getWorkflowsDir } from "./config.js";
 
 export interface WorkflowCatalogEntry {
   id: string;
@@ -71,7 +69,16 @@ export function getWorkflowCatalog(baseDir: string = "progressive-prompts"): Wor
 
 // CLI entry point
 function main() {
-  const baseDir = process.argv[2] || DEFAULT_WORKFLOWS_DIR;
+  const baseDir = process.argv[2] || getWorkflowsDir();
+
+  if (!fs.existsSync(baseDir)) {
+    console.error(JSON.stringify({
+      error: `Workflows directory not found: ${baseDir}`,
+      hint: `Please create the directory '${baseDir}' and add workflow definitions.`
+    }));
+    process.exit(1);
+  }
+
   const catalog = getWorkflowCatalog(baseDir);
   console.log(JSON.stringify(catalog, null, 2));
 }

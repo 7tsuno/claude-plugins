@@ -4,8 +4,7 @@
  */
 import * as fs from "fs";
 import * as path from "path";
-// Default to project root's progressive-prompts directory
-const DEFAULT_WORKFLOWS_DIR = path.resolve(process.cwd(), "workflows");
+import { getWorkflowsDir } from "./config.js";
 /**
  * Simple YAML parser for args section.
  */
@@ -80,7 +79,7 @@ export function getWorkflowArgs(workflowId, baseDir = "progressive-prompts") {
 // CLI entry point
 function main() {
     const workflowId = process.argv[2];
-    const baseDir = process.argv[3] || DEFAULT_WORKFLOWS_DIR;
+    const baseDir = process.argv[3] || getWorkflowsDir();
     if (!workflowId) {
         console.error("Usage: get_workflow_args.js <workflow_id> [base_dir]");
         process.exit(1);

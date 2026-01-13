@@ -1,5 +1,6 @@
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import * as path from "path";
+import * as fs from "fs";
 import { fileURLToPath } from "url";
 
 import {
@@ -17,6 +18,11 @@ import {
   parseSimpleYaml,
   getWorkflowCatalog,
 } from "../src/get_workflow_catalog.js";
+
+import {
+  loadConfig,
+  getWorkflowsDir,
+} from "../src/config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -177,5 +183,48 @@ describe("getWorkflowCatalog", () => {
   it("should return empty array for non-existent directory", () => {
     const catalog = getWorkflowCatalog("/non/existent/path");
     expect(catalog).toEqual([]);
+  });
+});
+
+describe("loadConfig", () => {
+  const testDir = path.join(__dirname, "fixtures", "config-test");
+  const configPath = path.join(testDir, ".progressive-workflow.json");
+
+  beforeAll(() => {
+    fs.mkdirSync(testDir, { recursive: true });
+  });
+
+  afterAll(() => {
+    if (fs.existsSync(configPath)) {
+      fs.unlinkSync(configPath);
+    }
+    fs.rmdirSync(testDir);
+  });
+
+  it("should return default config when no config file exists", () => {
+    const config = loadConfig(testDir);
+    expect(config.workflowsDir).toBe("workflows");
+  });
+
+  it("should load custom workflowsDir from config file", () => {
+    fs.writeFileSync(configPath, JSON.stringify({ workflowsDir: ".claude/workflows" }));
+    const config = loadConfig(testDir);
+    expect(config.workflowsDir).toBe(".claude/workflows");
+    fs.unlinkSync(configPath);
+  });
+
+  it("should merge with defaults for partial config", () => {
+    fs.writeFileSync(configPath, JSON.stringify({}));
+    const config = loadConfig(testDir);
+    expect(config.workflowsDir).toBe("workflows");
+    fs.unlinkSync(configPath);
+  });
+});
+
+describe("getWorkflowsDir", () => {
+  it("should return absolute path to workflows directory", () => {
+    const dir = getWorkflowsDir(FIXTURES_DIR);
+    expect(path.isAbsolute(dir)).toBe(true);
+    expect(dir).toContain("workflows");
   });
 });

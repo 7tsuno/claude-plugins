@@ -5,8 +5,7 @@
  */
 import * as fs from "fs";
 import * as path from "path";
-// Default to project root's progressive-prompts directory
-const DEFAULT_WORKFLOWS_DIR = path.resolve(process.cwd(), "workflows");
+import { getWorkflowsDir } from "./config.js";
 /**
  * Simple YAML parser for workflow.yaml files.
  */
@@ -124,7 +123,7 @@ function main() {
     const workflowId = args[0];
     const stepIndex = parseInt(args[1], 10);
     const variables = args[2] ? JSON.parse(args[2]) : {};
-    const baseDir = args[3] || DEFAULT_WORKFLOWS_DIR;
+    const baseDir = args[3] || getWorkflowsDir();
     try {
         const result = getPrompt(workflowId, stepIndex, variables, baseDir);
         console.log(JSON.stringify(result, null, 2));
