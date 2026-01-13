@@ -1,0 +1,9 @@
+{
+  "name": "progressive-workflow",
+  "version": "1.0.0",
+  "description": "Execute pre-defined workflows step by step. Each step is executed in isolation to maintain focus throughout multi-step tasks.",
+  "author": "7tsuno",
+  "repository": "https://github.com/7tsuno/claude-plugins",
+  "license": "MIT",
+  "keywords": ["workflow", "progressive", "multi-step", "automation"]
+}

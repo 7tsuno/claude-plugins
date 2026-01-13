@@ -1,11 +1,11 @@
 {
-  "name": "progressive-prompt",
+  "name": "progressive-workflow",
   "version": "1.0.0",
-  "description": "Execute multiple prompts sequentially with physical isolation for Claude Code",
+  "description": "Execute pre-defined workflows step by step for Claude Code",
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf ../../plugins/progressive-prompt/skills/progressive-prompt/scripts/*.js",
+    "clean": "rm -rf ../../plugins/progressive-workflow/skills/progressive-workflow/scripts/*.js",
     "prebuild": "npm run clean",
     "test": "vitest run",
     "test:watch": "vitest"

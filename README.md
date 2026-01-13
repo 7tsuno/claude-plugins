@@ -13,14 +13,14 @@ Add this marketplace to Claude Code:
 Then install any plugin:
 
 ```bash
-/plugin install progressive-prompt
+/plugin install progressive-workflow
 ```
 
 ## Available Plugins
 
 | Plugin | Description |
 |--------|-------------|
-| [progressive-prompt](./packages/progressive-prompt/README.md) | Execute multiple prompts sequentially with physical isolation |
+| [progressive-workflow](./packages/progressive-workflow/README.md) | Execute pre-defined workflows step by step |
 
 ## Repository Structure
 
@@ -29,15 +29,15 @@ claude-plugins/
 ├── .claude-plugin/
 │   └── marketplace.json       # Marketplace definition
 ├── plugins/                   # Distribution (plugins)
-│   └── progressive-prompt/
+│   └── progressive-workflow/
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       └── skills/
-│           └── progressive-prompt/
+│           └── progressive-workflow/
 │               ├── SKILL.md
 │               └── scripts/*.js
 ├── packages/                  # Development (source)
-│   └── progressive-prompt/
+│   └── progressive-workflow/
 │       ├── src/
 │       ├── tests/
 │       ├── examples/
@@ -50,7 +50,7 @@ claude-plugins/
 Each plugin has its own development environment in `packages/`:
 
 ```bash
-cd packages/progressive-prompt
+cd packages/progressive-workflow
 npm install
 npm run build   # Build to plugins/
 npm test        # Run tests

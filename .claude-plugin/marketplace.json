@@ -5,9 +5,9 @@
   },
   "plugins": [
     {
-      "name": "progressive-prompt",
-      "description": "Execute multiple prompts sequentially with physical isolation. Prevents attention loss by showing only one prompt at a time.",
-      "source": "./plugins/progressive-prompt"
+      "name": "progressive-workflow",
+      "description": "Execute pre-defined workflows step by step. Each step is executed in isolation to maintain focus throughout multi-step tasks.",
+      "source": "./plugins/progressive-workflow"
     }
   ]
 }

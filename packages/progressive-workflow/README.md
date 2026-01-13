@@ -1,12 +1,12 @@
-# Progressive Prompt
+# Progressive Workflow
 
-Execute multiple prompts sequentially with physical isolation for Claude Code.
+Execute pre-defined workflows step by step for Claude Code.
 
-## Why Progressive Prompt?
+## Why Progressive Workflow?
 
-When working with complex multi-step tasks, Claude's attention can become diluted across many instructions. Progressive Prompt solves this by:
+When working with complex multi-step tasks, Claude's attention can become diluted across many instructions. Progressive Workflow solves this by:
 
-- **Physical Isolation**: Only one prompt is visible at a time
+- **Step Isolation**: Only one step is visible at a time
 - **Focused Execution**: Each step gets full attention before moving to the next
 - **Variable Substitution**: Pass context between steps using `{{VARIABLE}}` syntax
 - **Structured Workflows**: Define reusable workflows in YAML format
@@ -22,7 +22,7 @@ Add the marketplace to Claude Code:
 Install the plugin:
 
 ```bash
-/plugin install progressive-prompt
+/plugin install progressive-workflow
 ```
 
 ## Usage
@@ -92,7 +92,7 @@ Run the my-workflow workflow with TARGET=src/main.ts
 Or use the skill directly:
 
 ```
-/progressive-prompt
+/progressive-workflow
 ```
 
 ## Workflow Format
@@ -149,7 +149,7 @@ npm run test:watch  # Watch mode
 ### Project Structure
 
 ```
-packages/progressive-prompt/
+packages/progressive-workflow/
 ├── src/                    # TypeScript source
 │   ├── get_next_prompt.ts
 │   ├── get_workflow_args.ts
@@ -166,7 +166,7 @@ packages/progressive-prompt/
 2. **Args**: `get_workflow_args.js` returns the argument definitions for a selected workflow
 3. **Execution**: `get_next_prompt.js` returns one prompt at a time with variables substituted
 
-The skill ensures Claude only sees one step at a time, preventing attention dilution across complex multi-step tasks.
+The skill ensures Claude only sees one step at a time, maintaining focus throughout multi-step tasks.
 
 ## License
 

@@ -1,11 +1,11 @@
 ---
-name: progressive-prompt
-description: Execute multiple prompts sequentially with physical isolation. Use when (1) user explicitly mentions "progressive prompt" or "workflow", or (2) complex multi-step tasks need focused execution. Prevents attention loss by showing only one prompt at a time.
+name: progressive-workflow
+description: Execute pre-defined workflows step by step. Use when user wants to run a workflow from the workflows/ directory or mentions "workflow". Each step is executed in isolation to maintain focus throughout multi-step tasks.
 ---
 
-# Progressive Prompt
+# Progressive Workflow
 
-Execute pre-defined workflows one prompt at a time.
+Execute pre-defined workflows one step at a time.
 
 ## Setup
 
