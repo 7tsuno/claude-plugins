@@ -55,3 +55,5 @@ Execute the returned prompt, then call with `step_index + 1` until `is_last` is 
 ## Important
 
 - Never read workflow.yaml directly. Always use `get_next_prompt.js` to get one prompt at a time.
+- **NEVER skip steps or try to "optimize" by doing multiple steps at once.** Always execute each step one by one using `get_next_prompt.js` until `is_last` is true.
+- Even if the steps seem repetitive or predictable, you MUST call `get_next_prompt.js` for each step. The workflow is designed to maintain focus and prevent context overload.
