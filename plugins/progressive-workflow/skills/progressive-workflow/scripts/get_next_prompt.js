@@ -104,12 +104,23 @@ export function getPrompt(workflowId, stepIndex, variables = {}, baseDir = "prog
     }
     let promptContent = fs.readFileSync(promptPath, "utf-8");
     promptContent = substituteVariables(promptContent, variables);
+    const isLast = stepIndex === totalSteps - 1;
+    // Append anti-skip instruction to prevent LLMs from skipping steps
+    const antiSkipInstruction = isLast
+        ? `
+
+---
+This is the final step of the workflow. After completing this step, the workflow is complete.`
+        : `
+
+---
+IMPORTANT: After completing this step, you MUST call \`get_next_prompt.js\` with step_index ${stepIndex + 1}. Do NOT skip steps. Do NOT combine multiple steps. Execute ONLY this step, then proceed to the next.`;
+    promptContent += antiSkipInstruction;
     return {
         step_index: stepIndex,
         step_name: step.name || `step_${stepIndex}`,
         prompt: promptContent,
-        total_steps: totalSteps,
-        is_last: stepIndex === totalSteps - 1,
+        is_last: isLast,
     };
 }
 // CLI entry point

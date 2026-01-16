@@ -134,9 +134,11 @@ describe("getPrompt", () => {
     const result = getPrompt("sample-workflow", 0, { TARGET_FILE: "test.ts" }, FIXTURES_DIR);
     expect(result.step_index).toBe(0);
     expect(result.step_name).toBe("step1");
-    expect(result.total_steps).toBe(2);
     expect(result.is_last).toBe(false);
     expect(result.prompt).toContain("step 1 for test.ts");
+    // Should contain anti-skip instruction
+    expect(result.prompt).toContain("IMPORTANT: After completing this step");
+    expect(result.prompt).toContain("Do NOT skip steps");
   });
 
   it("should return prompt for last step", () => {
