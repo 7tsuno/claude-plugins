@@ -1,6 +1,6 @@
 {
   "name": "progressive-workflow",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Execute pre-defined workflows step by step. Each step is executed in isolation to maintain focus throughout multi-step tasks.",
   "author": {
     "name": "7tsuno"
